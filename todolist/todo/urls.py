@@ -9,5 +9,7 @@ from . import views
 urlpatterns = [
     path('add/', views.add, name='add'),
     path('update/', views.update_task, name='update_task'),
+    path('delete/<str:id>/', views.delete, name='delete'),
+    path('clear/', views.clear, name='clear'),
     path('', views.show_all, name='show_all'),
 ]
