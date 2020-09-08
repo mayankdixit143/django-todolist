@@ -1,18 +1,30 @@
 {% extends 'todo/base.html' %}
 {% block child %}
-  <a class="btn btn-primary btn-danger col-2 offset-9" href="/clear/">Clear all</a>
+
+  <div class="btn-group offset-8 px-2 py-1">
+    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Sort by
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Closest Deadline</a>
+      <a class="dropdown-item" href="#">Date created</a>
+    </div>
+  </div>
+
+  <a class="btn btn-lg btn-primary btn-danger col-2" href="/clear/">Clear all</a>
+
 
   <div class="form row col-md-12 ">
     <!-- d-flex flex-column bd-highlight mb-3 -->
     <form class="col-12  px-5 py-2.5" action="/add/" method="post">
       <details>
         <summary>
-          <input class="col-4" type="text" name="taskname" value="">
-          <input class="offset-1 offset-1 text-primary" type="datetime-local" name="deadline" value="">
+          <input class="col-4 border-0 bg-dark text-light" type="text" name="taskname" placeholder="add new task here" value="">
+          <input class="offset-1 offset-1 text-primary border bg-dark text-light" type="datetime-local" name="deadline" value="">
           <input class="offset-1 btn btn-primary my-2" type="submit" name="Add" value="Add">
         </summary>
         <br>
-        <input class="px-5" type="text" name="description" value="">
+        <input class="px-5 border-0 bg-dark text-light" type="text" name="description" placeholder="add description here">
       </details>
       {% csrf_token %}
 
@@ -30,15 +42,15 @@
         <input type="text" name="id" value={{obj.id}} hidden>
         <details>
           <summary>
-            <input class="col-4" type="text" name="taskname" value={{obj.task}}>
-            <input class="offset-1" type="datetime" name="deadline" value={{ obj.deadline }}>
+            <input class="col-4 border-0 bg-dark text-light" type="text" name="taskname" value={{obj.task}}>
+            <input class="offset-1 border bg-dark text-light" type="datetime" name="deadline" value={{ obj.deadline }}>
             <input class="offset-3 bg-success" type="checkbox" name="completed"
                   onChange="this.form.submit()" {% if obj.is_completed %} checked {% endif %}>
           </summary>
 
         <br>
-        <input class="col-4 " type="text" name="description" value={{obj.description}}>
-        <input class="offset-1 " type="datetime" name="created_at" value={{obj.created_at}}>
+        <input class="col-4 border-0 bg-dark text-light" type="text" name="description" value={{obj.description}}>
+        <input class="offset-1 border-0 bg-dark text-light" type="datetime" name="created_at" value={{obj.created_at}}>
 
         {% csrf_token %}
         <input class="btn btn-primary offset-9 px-2 my-2" type="submit" name="Update" value="Update">

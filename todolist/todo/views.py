@@ -6,8 +6,10 @@ from django.http import JsonResponse
 
 # Create your views here.
 def show_all(request):
-    objs = ToDo.objects.all().order_by('deadline')
+    objs = list(ToDo.objects.all().filter(is_completed=True).order_by('deadline'))
+    objs = objs + list(ToDo.objects.all().filter(is_completed=False).order_by('deadline'))
     return render(request, 'todo/index.html', context={'list':objs})
+
 
 def add(request):
     if request.method == "POST":
