@@ -5,10 +5,26 @@ from rest_framework import viewsets
 from django.http import JsonResponse
 
 # Create your views here.
+def show(flag=0):
+    if flag==1:
+        objs = list(ToDo.objects.all().filter(is_completed=False).order_by('deadline'))
+        objs = objs + list(ToDo.objects.all().filter(is_completed=True).order_by('deadline'))
+    elif flag==2:
+        objs = list(ToDo.objects.all().filter(is_completed=False).order_by('created_at'))
+        objs = objs + list(ToDo.objects.all().filter(is_completed=True).order_by('created_at'))
+    else:
+        objs = list(ToDo.objects.all().filter(is_completed=False))
+        objs = objs + list(ToDo.objects.all().filter(is_completed=True))
+    return objs
+
+def show_by_deadline(request):
+    return render(request, 'todo/index.html', context={'list':show(flag=1)})
+
+def show_by_created_at(request):
+    return render(request, 'todo/index.html', context={'list':show(flag=2)})
+
 def show_all(request):
-    objs = list(ToDo.objects.all().filter(is_completed=True).order_by('deadline'))
-    objs = objs + list(ToDo.objects.all().filter(is_completed=False).order_by('deadline'))
-    return render(request, 'todo/index.html', context={'list':objs})
+    return render(request, 'todo/index.html', context={'list':show()})
 
 
 def add(request):
