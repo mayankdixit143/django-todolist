@@ -42,15 +42,23 @@
         <input type="text" name="id" value={{obj.id}} hidden>
         <details>
           <summary>
-            <input class="col-4 border-0 bg-dark text-light" type="text" name="taskname" value={{obj.task}}>
-            <input class="offset-1 border bg-dark text-light" type="datetime" name="deadline" value={{ obj.deadline }}>
-            <input class="offset-3 bg-success" type="checkbox" name="completed"
+            <input class="col-4 border-0 bg-dark text-light" type="text" name="taskname"
+                    value={{obj.task}}>
+            <input class="offset-1 col-2 text-center border bg-dark text-light" type="datetime" name="deadline"
+                    value={{ obj.deadline|date:"M-d,Y" }}>
+            <input class="col-2 text-center border bg-dark text-light" type="datetime" name="deadline"
+                    value={{ obj.deadline|time:"h:i_A" }}>
+            <input class="offset-1 bg-success" type="checkbox" name="completed"
                   onChange="this.form.submit()" {% if obj.is_completed %} checked {% endif %}>
           </summary>
 
         <br>
         <input class="col-4 border-0 bg-dark text-light" type="text" name="description" value={{obj.description}}>
-        <input class="offset-1 border-0 bg-dark text-light" type="datetime" name="created_at" value={{obj.created_at}}>
+
+        <input class="col-2 text-center border-0 bg-dark text-light" type="datetime" name="created_at"
+                value={{ obj.created_at|date:"M-d,Y" }}>
+        <input class="border-0 text-center bg-dark text-light" type="datetime" name="created_at"
+                value={{ obj.created_at|time:"h:i_A" }}>
 
         {% csrf_token %}
         <input class="btn btn-primary offset-9 px-2 my-2" type="submit" name="Update" value="Update">
